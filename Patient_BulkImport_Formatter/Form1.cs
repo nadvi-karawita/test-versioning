@@ -87,6 +87,7 @@ namespace Patient_BulkImport_Formatter
             {
                 if (eTPPatientBindingSource.DataSource is IList<ETPPatient> dataSource && dataSource.Any())
                 {
+                    DataGridValidation();
                     if (validData)
                     {
                         using var sfd = new SaveFileDialog() { Filter = "(*.csv)|*.csv", ValidateNames = true };
@@ -104,7 +105,7 @@ namespace Patient_BulkImport_Formatter
                                 writer.WriteRecord(eTPPatient);
                                 writer.NextRecord();
                             }
-                            MessageBox.Show("Export Successfull!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Export Successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
@@ -186,7 +187,7 @@ namespace Patient_BulkImport_Formatter
         private bool ValidateMobileNumber(string mobileNumber)
         {
             var pattern = @"^0\d{9}$";
-            var regexResult = Regex.IsMatch(mobileNumber, pattern);
+            var regexResult = Regex.IsMatch(mobileNumber.Trim(), pattern);
 
             validData = regexResult ? validData : regexResult;
             return regexResult;
